@@ -33,22 +33,31 @@ export class ProductService {
 
   async getProductById(prodId: string) {
     const product = await this.findProductById(prodId);
-    return product;
+    return {
+      id: product.id,
+      title: product.title,
+      description: product.description,
+      price: product.price,
+    };
   }
 
-  updateProduct(productId: string, title: string, desc: string, price: number) {
-    // const [product, index] = this.findProductById(productId);
-    // const updatedProduct = { ...product };
-    // if (title) {
-    //   updatedProduct.title = title;
-    // }
-    // if (desc) {
-    //   updatedProduct.description = desc;
-    // }
-    // if (price) {
-    //   updatedProduct.price = price;
-    // }
-    // this.products[index] = updatedProduct;
+  async updateProduct(
+    productId: string,
+    title: string,
+    desc: string,
+    price: number,
+  ) {
+    const updatedProduct = await this.findProductById(productId);
+    if (title) {
+      updatedProduct.title = title;
+    }
+    if (desc) {
+      updatedProduct.description = desc;
+    }
+    if (price) {
+      updatedProduct.price = price;
+    }
+    updatedProduct.save();
   }
 
   deleteProduct(prodId: string) {
@@ -67,11 +76,6 @@ export class ProductService {
     if (!product) {
       throw new NotFoundException('Could not found product');
     }
-    return {
-      id: product.id,
-      title: product.title,
-      description: product.description,
-      price: product.price,
-    };
+    return product;
   }
 }
