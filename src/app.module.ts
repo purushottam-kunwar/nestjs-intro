@@ -3,14 +3,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductModule } from './products/products.module';
+import { EmployeesModule } from './employees/employees.module';
 
 @Module({
   imports: [
-    ProductModule,
-    MongooseModule.forRoot(
-      'mongodb+srv://mongoose:mongoose@cluster0.1zy3i.mongodb.net/nestjs-demo?retryWrites=true&w=majority',
-    ),
+    EmployeesModule,
+    MongooseModule.forRoot('mongodb://localhost:27017/hrm'),
   ],
   controllers: [AppController],
   providers: [AppService],
